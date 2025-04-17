@@ -27,7 +27,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+//                     docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+                sh """
+                           docker buildx build \
+                           --platform linux/amd64,linux/arm64 \
+                           -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG} \
+                       """
                 }
             }
         }
@@ -49,13 +54,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQubeServer') {
-                    bat """
-                        sonar-scanner ^
-                        -Dsonar.projectKey=devops-demo ^
-                        -Dsonar.sources=src ^
-                        -Dsonar.projectName=DevOps-Demo ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.login=${env.SONAR_TOKEN} ^
+                    sh """
+                        /opt/homebrew/bin/sonar-scanner \
+                        -Dsonar.projectKey=devops-demo \
+                        -Dsonar.sources=src \
+                        -Dsonar.projectName=DevOps-Demo \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=${env.SONAR_TOKEN} \
                         -Dsonar.java.binaries=target/classes
                     """
                 }
