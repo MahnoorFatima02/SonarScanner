@@ -8,13 +8,13 @@ pipeline {
         DOCKERHUB_REPO = 'mahnoor95/shoppingcart'
         DOCKER_IMAGE_TAG = 'latest_v2'
         DOCKERHUB_USER = 'mahnoor95'
-        SONAR_TOKEN = '	sonar-scanner'
+        SONAR_TOKEN = credentials('sonar-scanner')
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/ADirin/sep2_week5_inclass_s2.git'
+                git branch: 'main', url: 'git@github.com:MahnoorFatima02/SonarScanner.git'
             }
         }
 
