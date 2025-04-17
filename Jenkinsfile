@@ -6,7 +6,7 @@ pipeline {
          PATH = "/opt/homebrew/bin:${MAVEN_HOME}/bin:${env.PATH}"
         DOCKERHUB_CREDENTIALS_ID = 'Docker_hub'
         DOCKERHUB_REPO = 'mahnoor95/sonar-scanner'
-        DOCKER_IMAGE_TAG = 'latest_v1'
+        DOCKER_IMAGE_TAG = 'latest_v2'
         DOCKERHUB_USER = 'mahnoor95'
         SONAR_TOKEN = credentials('sonar-scanner')
     }
